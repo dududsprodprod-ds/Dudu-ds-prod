@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dudu DS Prod - Studio d'Enregistrement</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #2d2d2d;
+            --light-gray: #8a8a8a;
+            --accent: #c0c0c0;
+            --white: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .contact-btn {
+            background: var(--medium-gray);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            color: var(--white) !important;
+            border: 1px solid var(--light-gray);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--light-gray);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #333 0%, #111 100%);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 2px solid var(--light-gray);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            border-color: var(--white);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 5%;
+            background: var(--dark-gray);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--medium-gray);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #3d3d3d;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--light-gray);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .service-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .service-card p {
+            color: var(--light-gray);
+            line-height: 1.6;
+        }
+
+        /* Booking Section */
+        .booking {
+            padding: 6rem 5%;
+            background: var(--black);
+            position: relative;
+        }
+
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--dark-gray);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--medium-gray);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--medium-gray);
+            border: 1px solid #3d3d3d;
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(192,192,192,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #444 0%, #222 100%);
+            color: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #555 0%, #333 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255,255,255,0.1);
+        }
+
+        /* Time Slots */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .time-slot {
+            padding: 0.8rem;
+            background: var(--medium-gray);
+            border: 1px solid #3d3d3d;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .time-slot:hover {
+            background: #3d3d3d;
+            border-color: var(--light-gray);
+        }
+
+        .time-slot.selected {
+            background: var(--accent);
+            color: var(--black);
+            border-color: var(--accent);
+            font-weight: 600;
+        }
+
+        .time-slot.booked {
+            opacity: 0.3;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 5%;
+            background: var(--dark-gray);
+            text-align: center;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--medium-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid var(--light-gray);
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover .contact-icon {
+            background: var(--accent);
+            color: var(--black);
+            transform: rotate(360deg);
+        }
+
+        .contact-item h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .contact-item p {
+            color: var(--light-gray);
+        }
+
+        .phone-number {
+            font-size: 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .phone-number:hover {
+            color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid var(--medium-gray);
+            color: var(--light-gray);
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: rgba(50, 205, 50, 0.1);
+            border: 1px solid #32cd32;
+            color: #32cd32;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                gap: 2rem;
+            }
+            
+            .booking-container {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">DUDU DS PROD</div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#reservation">Réservation</a></li>
+                <li><a href="#contact" class="contact-btn">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <h1>DUDU DS PROD</h1>
+            <p>Studio d'enregistrement professionnel - Antananarivo</p>
+            <a href="#reservation" class="cta-button">Prendre Rendez-vous</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title fade-in">Nos Services</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎙️</div>
+                    <h3>Enregistrement Vocal</h3>
+                    <p>Enregistrement professionnel pour chanteurs, rappeurs et voix off. Micros haut de gamme et traitement acoustique optimisé.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎧</div>
+                    <h3>Mixage & Mastering</h3>
+                    <p>Mixage audio professionnel et mastering pour donner à votre musique le son qu'elle mérite. Export multi-formats.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎹</div>
+                    <h3>Production Musicale</h3>
+                    <p>Création de beats, compositions originales et arrangements musicaux sur mesure pour tous styles.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎸</div>
+                    <h3>Enregistrement Instruments</h3>
+                    <p>Batterie, guitares, basses, synthétiseurs. Cabine dédiée pour capturer chaque nuance de votre performance.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">🎬</div>
+                    <h3>Post-Production</h3>
+                    <p>Édition audio, sound design, synchronisation vidéo et finalisation pour films, pubs et contenus digitaux.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">💿</div>
+                    <h3>Distribution Digitale</h3>
+                    <p>Préparation des fichiers pour Spotify, Apple Music, YouTube et toutes les plateformes de streaming.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking" id="reservation">
+        <div class="container">
+            <h2 class="section-title fade-in">Réserver une Session</h2>
+            <div class="booking-container fade-in">
+                <div class="success-message" id="successMessage">
+                    ✅ Votre demande de rendez-vous a été envoyée ! Nous vous contacterons rapidement au +261 33 64 236 35 pour confirmation.
+                </div>
+                
+                <form id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nom">Nom complet</label>
+                            <input type="text" id="nom" name="nom" required placeholder="Votre nom">
+                        </div>
+                        <div class="form-group">
+                            <label for="telephone">Téléphone</label>
+                            <input type="tel" id="telephone" name="telephone" required placeholder="+261 33 64 236 35" value="+261 ">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email (optionnel)</label>
+                            <input type="email" id="email" name="email" placeholder="votre@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Type de service</label>
+                            <select id="service" name="service" required>
+                                <option value="">Choisir un service</option>
+                                <option value="enregistrement">Enregistrement Vocal</option>
+                                <option value="mixage">Mixage / Mastering</option>
+                                <option value="production">Production Musicale</option>
+                                <option value="instruments">Enregistrement Instruments</option>
+                                <option value="postprod">Post-Production</option>
+                                <option value="autre">Autre (préciser)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="date">Date souhaitée</label>
+                            <input type="date" id="date" name="date" required min="">
+                        </div>
+                        <div class="form-group">
+                            <label>Durée estimée</label>
+                            <select name="duree" required>
+                                <option value="2h">2 heures</option>
+                                <option value="4h">4 heures</option>
+                                <option value="journee">Journée complète (8h)</option>
+                                <option value="plusieurs">Plusieurs jours</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Créneau horaire préféré</label>
+                        <div class="time-slots" id="timeSlots">
+                            <div class="time-slot" data-time="09:00">09:00</div>
+                            <div class="time-slot" data-time="10:00">10:00</div>
+                            <div class="time-slot" data-time="11:00">11:00</div>
+                            <div class="time-slot" data-time="12:00">12:00</div>
+                            <div class="time-slot" data-time="14:00">14:00</div>
+                            <div class="time-slot" data-time="15:00">15:00</div>
+                            <div class="time-slot" data-time="16:00">16:00</div>
+                            <div class="time-slot" data-time="17:00">17:00</div>
+                            <div class="time-slot" data-time="18:00">18:00</div>
+                            <div class="time-slot" data-time="19:00">19:00</div>
+                        </div>
+                        <input type="hidden" id="selectedTime" name="heure" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Détails du projet (optionnel)</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Décrivez brièvement votre projet..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Confirmer la Réservation</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Contactez-nous</h2>
+            <div class="contact-info fade-in">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <h4>Téléphone</h4>
+                    <a href="tel:+261336423635" class="phone-number">+261 33 64 236 35</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <h4>Studio</h4>
+                    <p>Antananarivo, Madagascar</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">⏰</div>
+                    <h4>Horaires</h4>
+                    <p>Lun-Sam : 9h - 20h</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">DUDU DS PROD</div>
+        <p>&copy; 2026 Dudu DS Prod. Tous droits réservés.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Studio d'enregistrement professionnel à Antananarivo</p>
+    </footer>
+
+    <script>
+        // Set minimum date to today
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        // Time slot selection
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const selectedTimeInput = document.getElementById('selectedTime');
+
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', function() {
+                if (this.classList.contains('booked')) return;
+                
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedTimeInput.value = this.dataset.time;
+            });
+        });
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedTimeInput.value) {
+                alert('Veuillez sélectionner un créneau horaire');
+                return;
+            }
+
+            // Simulate form submission
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
